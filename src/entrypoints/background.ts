@@ -1,6 +1,7 @@
 import { summarizeWithProvider } from '@/lib/ai/provider';
 import { summarizeFree } from '@/lib/ai/free-service';
 import { loadSettings } from '@/lib/storage/settings';
+import { getCachedResult, setCachedResult } from '@/lib/storage/cache';
 import type { ExtractedContent } from '@/lib/extract/types';
 
 export default defineBackground(() => {
@@ -58,10 +59,14 @@ export default defineBackground(() => {
     // 2. 读取设置
     const settings = await loadSettings();
 
-    // 3. AI 总结
+    // 3. AI 总结（带缓存）
     let markdown: string;
 
-    if (settings.apiKey) {
+    // 先查缓存
+    const cached = await getCachedResult(content.textContent, settings.model);
+    if (cached) {
+      markdown = cached.markdown;
+    } else if (settings.apiKey) {
       // 用户自带 Key 模式
       markdown = await summarizeWithProvider({
         textContent: content.textContent,
@@ -76,6 +81,15 @@ export default defineBackground(() => {
 
     if (!markdown) {
       throw new Error('AI returned empty result');
+    }
+
+    // 写入缓存
+    if (!cached) {
+      await setCachedResult(content.textContent, settings.model, {
+        markdown,
+        title: content.title,
+        url: content.url,
+      });
     }
 
     return { content, markdown };

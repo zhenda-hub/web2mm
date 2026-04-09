@@ -1,7 +1,7 @@
 import { renderMindmap } from '@/lib/markmap/render';
 import { loadSettings, saveSettings } from '@/lib/storage/settings';
+import { clearCache } from '@/lib/storage/cache';
 import { MODELS } from '@/lib/ai/models';
-import { PLATFORMS } from '@/lib/ai/platforms';
 
 type ViewName = 'welcome' | 'loading' | 'result' | 'settings' | 'error';
 
@@ -114,6 +114,14 @@ function setupEventListeners() {
   document.getElementById('btn-back')!.addEventListener('click', () => showView('welcome'));
   document.getElementById('btn-error-back')!.addEventListener('click', () => showView('welcome'));
   document.getElementById('btn-retry')!.addEventListener('click', () => summarize('page'));
+
+  // 清除缓存
+  document.getElementById('btn-clear-cache')!.addEventListener('click', async () => {
+    await clearCache();
+    const btn = document.getElementById('btn-clear-cache')!;
+    btn.textContent = '已清除 ✓';
+    setTimeout(() => { btn.textContent = '清除缓存'; }, 1500);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
