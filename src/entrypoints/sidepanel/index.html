@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>web2mm</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- 欢迎/空闲状态 -->
+    <div id="view-welcome" class="view active">
+      <div class="welcome-icon">🗺️</div>
+      <h1>web2mm</h1>
+      <p>将网页总结为思维导图</p>
+      <button id="btn-summarize-page" class="btn btn-primary">总结当前页面</button>
+      <button id="btn-summarize-selection" class="btn btn-secondary">总结选中文本</button>
+      <button id="btn-settings" class="btn btn-ghost">⚙️ 设置</button>
+    </div>
+
+    <!-- 加载中 -->
+    <div id="view-loading" class="view">
+      <div class="spinner"></div>
+      <p id="loading-text">正在分析页面内容...</p>
+    </div>
+
+    <!-- 结果/思维导图 -->
+    <div id="view-result" class="view">
+      <div id="toolbar">
+        <button id="btn-back" class="btn btn-ghost" title="返回">←</button>
+        <span id="result-title" class="result-title"></span>
+        <div class="toolbar-actions">
+          <button id="btn-export-png" class="btn btn-ghost" title="导出 PNG">📷</button>
+          <button id="btn-export-svg" class="btn btn-ghost" title="导出 SVG">🖼️</button>
+          <button id="btn-export-pdf" class="btn btn-ghost" title="导出 PDF">📄</button>
+          <button id="btn-export-mm" class="btn btn-ghost" title="导出 .mm">📂</button>
+        </div>
+      </div>
+      <div id="mindmap-container">
+        <svg id="mindmap-svg"></svg>
+      </div>
+    </div>
+
+    <!-- 设置 -->
+    <div id="view-settings" class="view">
+      <div class="settings-header">
+        <button id="btn-settings-back" class="btn btn-ghost">← 返回</button>
+        <h2>设置</h2>
+      </div>
+      <div class="settings-body">
+        <div class="setting-group">
+          <label for="select-platform">AI 平台</label>
+          <select id="select-platform">
+            <option value="siliconflow">硅基流动 (SiliconFlow)</option>
+            <option value="openrouter">OpenRouter</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label for="input-api-key">API Key (可选，留空使用免费服务)</label>
+          <input id="input-api-key" type="password" placeholder="sk-..." />
+        </div>
+        <div class="setting-group">
+          <label for="select-model">模型</label>
+          <select id="select-model"></select>
+        </div>
+        <div class="setting-group">
+          <label for="select-source">默认内容来源</label>
+          <select id="select-source">
+            <option value="page">整页正文</option>
+            <option value="selection">选中文本</option>
+          </select>
+        </div>
+        <p class="settings-hint">💡 不填 API Key 可使用免费服务（每日限额）</p>
+      </div>
+    </div>
+
+    <!-- 错误 -->
+    <div id="view-error" class="view">
+      <div class="error-icon">⚠️</div>
+      <p id="error-text">出错了</p>
+      <button id="btn-retry" class="btn btn-primary">重试</button>
+      <button id="btn-error-back" class="btn btn-ghost">返回</button>
+    </div>
+  </div>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
