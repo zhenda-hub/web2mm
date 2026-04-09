@@ -181,6 +181,11 @@ body {
   flex: 1;
   overflow: hidden;
   position: relative;
+  background: #ffffff;
+}
+
+html.markmap-dark #mindmap-container {
+  background: #1e1e2e;
 }
 
 #mindmap-svg {
