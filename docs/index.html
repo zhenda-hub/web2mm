@@ -222,10 +222,10 @@
     }
     .lang-toggle:hover { color: var(--primary); border-color: var(--primary); }
 
-    [lang="en"] { display: none; }
-    body.en [lang="zh"] { display: none; }
-    body.en [lang="en"] { display: block; }
-    body.en .hero h1 span { color: var(--primary); }
+    [lang="zh"] { display: none; }
+    body.zh [lang="en"] { display: none; }
+    body.zh [lang="zh"] { display: block; }
+    body.zh .hero h1 span { color: var(--primary); }
   </style>
 </head>
 <body>
@@ -239,7 +239,7 @@
       <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a>
       <a href="privacy.html" class="privacy-link" lang="zh">隐私政策</a>
       <a href="privacy.html" class="privacy-link" lang="en">Privacy</a>
-      <button class="lang-toggle" onclick="toggleLang()">EN</button>
+      <button class="lang-toggle" onclick="toggleLang()">中文</button>
     </div>
   </nav>
 
@@ -376,20 +376,20 @@
   </div>
 
   <script>
-    function setLang(isEn) {
-      document.body.classList.toggle('en', isEn);
+    function setLang(isZh) {
+      document.body.classList.toggle('zh', isZh);
       const btn = document.querySelector('.lang-toggle');
-      btn.textContent = isEn ? '中文' : 'EN';
+      btn.textContent = isZh ? 'EN' : '中文';
       document.querySelectorAll('.privacy-link').forEach(a => {
-        const base = a.getAttribute('href');
-        a.href = isEn ? base + '?lang=en' : base;
+        const base = a.getAttribute('href').split('?')[0];
+        a.href = isZh ? base : base + '?lang=en';
       });
     }
     function toggleLang() {
-      setLang(!document.body.classList.contains('en'));
+      setLang(!document.body.classList.contains('zh'));
     }
     // Read language from URL on page load
-    if (new URLSearchParams(location.search).get('lang') === 'en') setLang(true);
+    if (new URLSearchParams(location.search).get('lang') === 'zh') setLang(true);
     // Lightbox
     document.querySelectorAll('.screenshot img').forEach(img => {
       img.addEventListener('click', () => {

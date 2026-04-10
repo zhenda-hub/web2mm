@@ -47,9 +47,9 @@
     ul { margin: 12px 0; padding-left: 24px; }
     li { margin-bottom: 8px; font-size: 15px; }
 
-    [lang="en"] { display: none; }
-    body.en [lang="zh"] { display: none; }
-    body.en [lang="en"] { display: block; }
+    [lang="zh"] { display: none; }
+    body.zh [lang="en"] { display: none; }
+    body.zh [lang="zh"] { display: block; }
   </style>
 </head>
 <body>
@@ -59,7 +59,7 @@
       <a href="index.html" class="home-link" lang="zh">首页</a>
       <a href="index.html" class="home-link" lang="en">Home</a>
       <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a>
-      <button class="lang-toggle" onclick="toggleLang()">EN</button>
+      <button class="lang-toggle" onclick="toggleLang()">中文</button>
     </div>
   </nav>
 
@@ -133,20 +133,20 @@
   </div>
 
   <script>
-    function setLang(isEn) {
-      document.body.classList.toggle('en', isEn);
+    function setLang(isZh) {
+      document.body.classList.toggle('zh', isZh);
       const btn = document.querySelector('.lang-toggle');
-      btn.textContent = isEn ? '中文' : 'EN';
+      btn.textContent = isZh ? 'EN' : '中文';
       document.querySelectorAll('.home-link').forEach(a => {
-        const base = a.getAttribute('href');
-        a.href = isEn ? base + '?lang=en' : base;
+        const base = a.getAttribute('href').split('?')[0];
+        a.href = isZh ? base : base + '?lang=en';
       });
     }
     function toggleLang() {
-      setLang(!document.body.classList.contains('en'));
+      setLang(!document.body.classList.contains('zh'));
     }
     // Read language from URL on page load
-    if (new URLSearchParams(location.search).get('lang') === 'en') setLang(true);
+    if (new URLSearchParams(location.search).get('lang') === 'zh') setLang(true);
   </script>
 </body>
 </html>

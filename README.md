@@ -1,85 +1,92 @@
-# web2mm
+# Web2MM
 
-将网页内容总结为交互式思维导图的浏览器扩展。
+A browser extension that summarizes webpage content into interactive mind maps. [中文文档](README_ZH.md)
 
-## 功能
+## Features
 
-- **内容获取**：支持整页纯净正文（自动去广告/导航/侧边栏）和用户选中文本两种来源
-- **AI 总结**：调用大模型按层级结构总结，输出 Markdown 或 JSON 格式
-- **思维导图**：实时渲染交互式思维导图，支持缩放、折叠、拖拽
-- **多平台模型**：硅基流动（SiliconFlow）+ OpenRouter，一个 API 兼容格式
-- **免费服务**：内置免费额度（每日限额），开箱即用
-- **导出**：PNG / SVG / PDF / .mm (FreeMind)
-- **主题**：支持 light/dark 主题，可手动切换或自动跟随
-- **浏览器**：Chrome + Edge（Manifest V3）
+- **Smart Extraction**: Automatically removes ads, navigation, and sidebar noise to extract clean article text. Also supports user-selected text.
+- **AI Summarization**: Calls LLMs to generate hierarchical summaries in Markdown format.
+- **Interactive Mind Map**: Real-time rendering with zoom, fold, and drag support. Light/dark theme toggle.
+- **Dual Platform**: SiliconFlow (China) + OpenRouter (International), unified OpenAI-compatible API.
+- **Free Tier**: Built-in free quota — works out of the box without an API key.
+- **Smart Cache**: 24-hour AI response cache to avoid redundant API calls.
+- **Open Source**: Apache-2.0 license. No data collection.
 
-## 快速开始
+## Install
+
+### From Release (Recommended)
+
+1. Download `web2mm-*-chrome.zip` from [Latest Release](https://github.com/zhenda-hub/web2mm/releases/latest)
+2. Unzip the file
+3. Open `chrome://extensions` (or `edge://extensions`)
+4. Enable **Developer mode** (top right)
+5. Click **Load unpacked** and select the unzipped folder
+
+### From Source
 
 ```bash
-# 安装依赖
 pnpm install
-
-# 开发模式（支持 HMR）
-pnpm dev
-
-# 生产构建
 pnpm build
-
-# 打包发布
-pnpm zip
+# Load .output/chrome-mv3/ as unpacked extension
 ```
 
-### 加载扩展
+## Usage
 
-1. Chrome 打开 `chrome://extensions`
-2. 开启右上角**开发者模式**
-3. 点击**加载已解压的扩展程序**，选择 `.output/chrome-mv3/` 目录
+1. Open any article or blog page
+2. Click the extension icon to open the side panel
+3. Click **Summarize** (full page) or select text first, then click **Summarize Selection**
+4. AI generates a mind map automatically
+5. Configure API key and model in **Settings**
 
-## 使用
+### AI Platforms
 
-1. 打开任意文章/博客页面
-2. 点击扩展图标，侧边栏打开
-3. 点击**总结当前页面**（整页）或**总结选中文本**（先选中文字）
-4. AI 总结后自动渲染为思维导图
-5. 可在**设置**中配置 API Key 和选择模型
+| Platform | Description | Recommended Models |
+|----------|-------------|-------------------|
+| SiliconFlow | China-based, some models free | Qwen2.5-7B, DeepSeek-V3 |
+| OpenRouter | International, 200+ models | GPT-4o Mini, Gemini Flash, Claude Haiku |
 
-### AI 配置
+## Tech Stack
 
-| 平台 | 说明 | 推荐模型 |
-|------|------|----------|
-| 硅基流动 | 国内平台，部分模型免费 | Qwen2.5-7B、DeepSeek-V3 |
-| OpenRouter | 海外平台，200+ 模型 | GPT-4o Mini、Gemini Flash、Claude Haiku |
+| Component | Choice | Notes |
+|-----------|--------|-------|
+| Framework | [WXT](https://wxt.dev/) | Vite-based extension framework |
+| Language | TypeScript | Full type safety |
+| Extraction | @mozilla/readability | Same engine as Firefox Reader Mode |
+| Mind Map | markmap | Markdown to mind map |
+| AI | OpenAI-compatible API | Unified format for both platforms |
 
-不填 API Key 可使用免费服务（每日限额）。
-
-## 技术栈
-
-| 组件 | 选择 | 说明 |
-|------|------|------|
-| 框架 | [WXT](https://wxt.dev/) | Vite 驱动的扩展开发框架 |
-| 语言 | TypeScript | 全项目类型安全 |
-| 内容提取 | @mozilla/readability | Firefox 阅读模式同款 |
-| 思维导图 | markmap | Markdown → 思维导图 |
-| AI 集成 | OpenAI 兼容 API | 硅基流动/OpenRouter 统一格式 |
-| 免费 backend | Cloudflare Workers | 代理 API Key + 限流 |
-
-## 项目结构
+## Project Structure
 
 ```
 src/
 ├── entrypoints/
-│   ├── background.ts          # Service Worker: 消息路由 + AI 调用
-│   ├── content.ts             # Content Script: 页面内容提取
-│   └── sidepanel/             # 侧边栏 UI
+│   ├── background.ts          # Service Worker: message routing + AI calls
+│   ├── content.ts             # Content Script: page content extraction
+│   └── sidepanel/             # Side panel UI
 │       ├── index.html
 │       ├── main.ts
 │       └── style.css
 └── lib/
-    ├── ai/                    # AI 集成 (provider, prompt, platforms, models)
-    ├── extract/               # 内容提取 (readability, selection)
-    ├── markmap/               # 思维导图渲染
-    └── storage/               # 设置持久化
+    ├── ai/                    # AI integration (provider, prompt, platforms, models)
+    ├── extract/               # Content extraction (readability, selection)
+    ├── markmap/               # Mind map rendering
+    └── storage/               # Settings persistence
 ```
+
+## Development
+
+```bash
+pnpm dev              # Dev mode with HMR (Chrome)
+pnpm build            # Production build
+pnpm build -b firefox # Firefox build
+pnpm zip              # Package for Chrome Web Store
+```
+
+## Links
+
+- **Website**: https://zhenda-hub.github.io/web2mm/
+- **Privacy Policy**: https://zhenda-hub.github.io/web2mm/privacy.html
+- **Issues**: https://github.com/zhenda-hub/web2mm/issues
 
 ## License
 
