@@ -3,79 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>隐私政策 - Web2MM</title>
+  <title>Privacy Policy - Web2MM</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #4f46e5;
+      --bg: #ffffff;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
-      color: #1e293b;
-      background: #ffffff;
+      color: var(--text);
+      background: var(--bg);
       line-height: 1.8;
-      padding: 0 24px;
     }
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 48px 0;
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
     }
+    nav .logo { font-size: 20px; font-weight: 700; color: var(--primary); }
+    nav .links { display: flex; gap: 24px; align-items: center; }
+    nav .links a { font-size: 14px; color: var(--text-secondary); }
+    nav .links a:hover { color: var(--primary); text-decoration: none; }
+    .lang-toggle {
+      font-size: 13px; color: var(--text-secondary); cursor: pointer;
+      border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; background: var(--bg);
+    }
+    .lang-toggle:hover { color: var(--primary); border-color: var(--primary); }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 48px 32px; }
     h1 { font-size: 28px; margin-bottom: 8px; }
-    .updated { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+    .updated { color: var(--text-secondary); font-size: 14px; margin-bottom: 32px; }
     h2 { font-size: 18px; margin-top: 32px; margin-bottom: 12px; }
     p { margin-bottom: 12px; font-size: 15px; }
     ul { margin: 12px 0; padding-left: 24px; }
     li { margin-bottom: 8px; font-size: 15px; }
-    a { color: #4f46e5; }
-    a:hover { text-decoration: underline; }
-    .back { display: inline-block; margin-bottom: 24px; font-size: 14px; }
+
+    [lang="en"] { display: none; }
+    body.en [lang="zh"] { display: none; }
+    body.en [lang="en"] { display: block; }
   </style>
 </head>
 <body>
+  <nav>
+    <a class="logo" href="index.html">Web2MM</a>
+    <div class="links">
+      <a href="index.html" class="home-link" lang="zh">首页</a>
+      <a href="index.html" class="home-link" lang="en">Home</a>
+      <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a>
+      <button class="lang-toggle" onclick="toggleLang()">EN</button>
+    </div>
+  </nav>
+
   <div class="container">
-    <a class="back" href="index.html">&larr; 返回首页</a>
-    <h1>Privacy Policy / 隐私政策</h1>
-    <p class="updated">Last updated / 最后更新：2025-04-11</p>
+    <h1 lang="zh">隐私政策</h1>
+    <h1 lang="en">Privacy Policy</h1>
+    <p class="updated" lang="zh">最后更新：2025-04-11</p>
+    <p class="updated" lang="en">Last updated: 2025-04-11</p>
 
-    <h2>Overview / 概述</h2>
-    <p>Web2MM is an open-source browser extension that summarizes webpage content into interactive mind maps. We are committed to protecting your privacy.</p>
-    <p>Web2MM 是一款开源浏览器扩展，将网页内容总结为交互式思维导图。我们致力于保护您的隐私。</p>
+    <h2 lang="zh">概述</h2>
+    <h2 lang="en">Overview</h2>
+    <p lang="zh">Web2MM 是一款开源浏览器扩展，将网页内容总结为交互式思维导图。我们致力于保护您的隐私。</p>
+    <p lang="en">Web2MM is an open-source browser extension that summarizes webpage content into interactive mind maps. We are committed to protecting your privacy.</p>
 
-    <h2>Data Collection / 数据收集</h2>
-    <p><strong>We do not collect, store, or transmit any personal data.</strong></p>
-    <p><strong>我们不收集、存储或传输任何个人数据。</strong></p>
-    <ul>
-      <li>No user tracking or analytics / 不追踪用户行为</li>
-      <li>No cookies / 不使用 Cookie</li>
-      <li>No personal information collected / 不收集个人信息</li>
-      <li>No browsing history stored / 不存储浏览历史</li>
+    <h2 lang="zh">数据收集</h2>
+    <h2 lang="en">Data Collection</h2>
+    <p lang="zh"><strong>我们不收集、存储或传输任何个人数据。</strong></p>
+    <p lang="en"><strong>We do not collect, store, or transmit any personal data.</strong></p>
+    <ul lang="zh">
+      <li>不追踪用户行为</li>
+      <li>不使用 Cookie</li>
+      <li>不收集个人信息</li>
+      <li>不存储浏览历史</li>
+    </ul>
+    <ul lang="en">
+      <li>No user tracking or analytics</li>
+      <li>No cookies</li>
+      <li>No personal information collected</li>
+      <li>No browsing history stored</li>
     </ul>
 
-    <h2>Data Storage / 数据存储</h2>
-    <p>All data is stored locally on your device using <code>chrome.storage.local</code>:</p>
-    <p>所有数据通过 <code>chrome.storage.local</code> 存储在您的设备本地：</p>
-    <ul>
-      <li><strong>Settings</strong>: Your API key, platform selection, and model preference / <strong>设置</strong>：您的 API Key、平台选择和模型偏好</li>
-      <li><strong>Cache</strong>: AI response cache (24h TTL) to avoid redundant API calls / <strong>缓存</strong>：AI 响应缓存（24 小时过期），避免重复调用</li>
+    <h2 lang="zh">数据存储</h2>
+    <h2 lang="en">Data Storage</h2>
+    <p lang="zh">所有数据通过 <code>chrome.storage.local</code> 存储在您的设备本地：</p>
+    <p lang="en">All data is stored locally on your device using <code>chrome.storage.local</code>:</p>
+    <ul lang="zh">
+      <li><strong>设置</strong>：您的 API Key、平台选择和模型偏好</li>
+      <li><strong>缓存</strong>：AI 响应缓存（24 小时过期），避免重复调用</li>
     </ul>
-    <p>Neither settings nor cache are transmitted to any third-party servers.</p>
-    <p>设置和缓存均不会传输到任何第三方服务器。</p>
-
-    <h2>Third-Party Services / 第三方服务</h2>
-    <p>Web2MM sends webpage text content to AI providers for summarization. This only happens when you click the "Summarize" button:</p>
-    <p>Web2MM 将网页文本内容发送给 AI 提供商进行总结。此操作仅在您点击"总结"按钮时发生：</p>
-    <ul>
-      <li><strong>SiliconFlow</strong> (<a href="https://siliconflow.cn" target="_blank">siliconflow.cn</a>) / 国内 AI 平台</li>
-      <li><strong>OpenRouter</strong> (<a href="https://openrouter.ai" target="_blank">openrouter.ai</a>) / 海外 AI 平台</li>
+    <ul lang="en">
+      <li><strong>Settings</strong>: Your API key, platform selection, and model preference</li>
+      <li><strong>Cache</strong>: AI response cache (24h TTL) to avoid redundant API calls</li>
     </ul>
-    <p>Only the extracted text content of the webpage is sent. No other data is transmitted.</p>
-    <p>仅发送提取的网页文本内容，不传输其他任何数据。</p>
+    <p lang="zh">设置和缓存均不会传输到任何第三方服务器。</p>
+    <p lang="en">Neither settings nor cache are transmitted to any third-party servers.</p>
 
-    <h2>Open Source / 开源</h2>
-    <p>Web2MM is fully open source. You can review all code at <a href="https://github.com/zhenda-hub/web2mm" target="_blank">github.com/zhenda-hub/web2mm</a>.</p>
-    <p>Web2MM 完全开源，您可以在 <a href="https://github.com/zhenda-hub/web2mm" target="_blank">github.com/zhenda-hub/web2mm</a> 审查所有代码。</p>
+    <h2 lang="zh">第三方服务</h2>
+    <h2 lang="en">Third-Party Services</h2>
+    <p lang="zh">Web2MM 将网页文本内容发送给 AI 提供商进行总结。此操作仅在您点击"总结"按钮时发生：</p>
+    <p lang="en">Web2MM sends webpage text content to AI providers for summarization. This only happens when you click the "Summarize" button:</p>
+    <ul lang="zh">
+      <li><strong>硅基流动</strong>（<a href="https://siliconflow.cn" target="_blank">siliconflow.cn</a>）— 国内 AI 平台</li>
+      <li><strong>OpenRouter</strong>（<a href="https://openrouter.ai" target="_blank">openrouter.ai</a>）— 海外 AI 平台</li>
+    </ul>
+    <ul lang="en">
+      <li><strong>SiliconFlow</strong> (<a href="https://siliconflow.cn" target="_blank">siliconflow.cn</a>) — Chinese AI platform</li>
+      <li><strong>OpenRouter</strong> (<a href="https://openrouter.ai" target="_blank">openrouter.ai</a>) — International AI platform</li>
+    </ul>
+    <p lang="zh">仅发送提取的网页文本内容，不传输其他任何数据。</p>
+    <p lang="en">Only the extracted text content of the webpage is sent. No other data is transmitted.</p>
 
-    <h2>Contact / 联系方式</h2>
-    <p>If you have questions about this privacy policy, please open an issue on <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank">GitHub Issues</a>.</p>
-    <p>如有隐私政策相关问题，请在 <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank">GitHub Issues</a> 提交。</p>
+    <h2 lang="zh">开源</h2>
+    <h2 lang="en">Open Source</h2>
+    <p lang="zh">Web2MM 完全开源，您可以在 <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a> 审查所有代码。</p>
+    <p lang="en">Web2MM is fully open source. You can review all code on <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a>.</p>
+
+    <h2 lang="zh">联系方式</h2>
+    <h2 lang="en">Contact</h2>
+    <p lang="zh">如有隐私政策相关问题，请在 <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank">GitHub Issues</a> 提交。</p>
+    <p lang="en">If you have questions about this privacy policy, please open an issue on <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank">GitHub Issues</a>.</p>
   </div>
+
+  <script>
+    function setLang(isEn) {
+      document.body.classList.toggle('en', isEn);
+      const btn = document.querySelector('.lang-toggle');
+      btn.textContent = isEn ? '中文' : 'EN';
+      document.querySelectorAll('.home-link').forEach(a => {
+        const base = a.getAttribute('href');
+        a.href = isEn ? base + '?lang=en' : base;
+      });
+    }
+    function toggleLang() {
+      setLang(!document.body.classList.contains('en'));
+    }
+    // Read language from URL on page load
+    if (new URLSearchParams(location.search).get('lang') === 'en') setLang(true);
+  </script>
 </body>
 </html>
