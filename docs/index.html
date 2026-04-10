@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web2MM - 网页一键转思维导图</title>
+  <meta name="description" content="一键将网页内容总结为交互式思维导图的浏览器扩展。开源、免费、支持 Chrome 和 Edge。">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+    nav .logo { font-size: 20px; font-weight: 700; color: var(--primary); }
+    nav .links { display: flex; gap: 24px; align-items: center; }
+    nav .links a { font-size: 14px; color: var(--text-secondary); }
+    nav .links a:hover { color: var(--primary); text-decoration: none; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 32px 60px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-decoration: none; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-secondary { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); }
+    .btn img { width: 20px; height: 20px; }
+
+    /* Screenshot */
+    .screenshot {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 0 32px;
+    }
+    .screenshot-box {
+      background: #1e1e2e;
+      border-radius: 12px;
+      padding: 24px;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 16px;
+      border: 1px solid var(--border);
+    }
+
+    /* Features */
+    .features {
+      max-width: 900px;
+      margin: 0 auto 80px;
+      padding: 0 32px;
+    }
+    .features h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 48px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .feature-card .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .feature-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--text-secondary); }
+
+    /* How it works */
+    .steps {
+      background: var(--bg-alt);
+      padding: 80px 32px;
+    }
+    .steps-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .steps h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 48px;
+    }
+    .steps-list {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .step {
+      flex: 1;
+      min-width: 200px;
+      max-width: 260px;
+      text-align: center;
+    }
+    .step .num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .step h3 { font-size: 16px; margin-bottom: 6px; }
+    .step p { font-size: 14px; color: var(--text-secondary); }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 80px 32px;
+    }
+    .cta h2 { font-size: 28px; margin-bottom: 12px; }
+    .cta p { color: var(--text-secondary); margin-bottom: 24px; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    footer a { color: var(--text-secondary); }
+    footer a:hover { color: var(--primary); }
+
+    /* Lang toggle */
+    .lang-toggle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: var(--bg);
+    }
+    .lang-toggle:hover { color: var(--primary); border-color: var(--primary); }
+
+    [lang="en"] { display: none; }
+    body.en [lang="zh"] { display: none; }
+    body.en [lang="en"] { display: block; }
+    body.en .hero h1 span { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Web2MM</div>
+    <div class="links">
+      <a href="#features" lang="zh">功能</a>
+      <a href="#features" lang="en">Features</a>
+      <a href="#how" lang="zh">使用方法</a>
+      <a href="#how" lang="en">How to Use</a>
+      <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a>
+      <button class="lang-toggle" onclick="toggleLang()">EN</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1 lang="zh">网页内容，<span>一键</span>变思维导图</h1>
+    <h1 lang="en">Webpages to Mind Maps, <span>Instantly</span></h1>
+    <p lang="zh">AI 驱动的浏览器扩展，一键总结网页文章为可交互的思维导图。开源、免费。</p>
+    <p lang="en">AI-powered browser extension that summarizes webpages into interactive mind maps. Open source & free.</p>
+    <div class="hero-buttons">
+      <a class="btn btn-primary" href="https://github.com/zhenda-hub/web2mm/releases/latest" target="_blank">
+        <span lang="zh">免费下载</span>
+        <span lang="en">Download Free</span>
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/zhenda-hub/web2mm" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span lang="zh">查看源码</span>
+        <span lang="en">View Source</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="screenshot">
+    <div class="screenshot-box" id="screenshot-placeholder">
+      <span lang="zh">截图占位 - 安装后截图替换</span>
+      <span lang="en">Screenshot placeholder</span>
+    </div>
+  </div>
+
+  <section class="features" id="features">
+    <h2 lang="zh">核心功能</h2>
+    <h2 lang="en">Core Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">🧠</div>
+        <h3 lang="zh">AI 智能总结</h3>
+        <h3 lang="en">AI Summarization</h3>
+        <p lang="zh">调用大模型自动提取网页关键信息，按层级结构生成思维导图大纲。</p>
+        <p lang="en">AI automatically extracts key information and generates a hierarchical mind map outline.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📄</div>
+        <h3 lang="zh">智能提取</h3>
+        <h3 lang="en">Smart Extraction</h3>
+        <p lang="zh">自动去除广告、导航等噪音，提取纯净正文。也支持选中文本总结。</p>
+        <p lang="en">Automatically removes ads and navigation noise. Also supports selected text summarization.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🗺️</div>
+        <h3 lang="zh">交互式思维导图</h3>
+        <h3 lang="en">Interactive Mind Map</h3>
+        <p lang="zh">实时渲染可缩放、可折叠、可拖拽的思维导图，支持亮色/暗色主题。</p>
+        <p lang="en">Real-time renderable mind map with zoom, fold, drag support and light/dark themes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔑</div>
+        <h3 lang="zh">自带 Key / 免费模式</h3>
+        <h3 lang="en">Bring Your Key / Free</h3>
+        <p lang="zh">支持硅基流动、OpenRouter 双平台。不填 Key 也有免费额度可用。</p>
+        <p lang="en">Supports SiliconFlow and OpenRouter. Free tier available without API key.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3 lang="zh">智能缓存</h3>
+        <h3 lang="en">Smart Cache</h3>
+        <p lang="zh">相同内容不重复请求 AI，24 小时缓存，响应更快、更省流量。</p>
+        <p lang="en">Same content won't trigger duplicate AI calls. 24h cache for faster responses.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔓</div>
+        <h3 lang="zh">开源免费</h3>
+        <h3 lang="en">Open Source</h3>
+        <p lang="zh">代码完全开源，Apache-2.0 许可证。无数据收集，隐私安全。</p>
+        <p lang="en">Fully open source under Apache-2.0. No data collection, privacy-first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps" id="how">
+    <div class="steps-inner">
+      <h2 lang="zh">三步开始使用</h2>
+      <h2 lang="en">Get Started in 3 Steps</h2>
+      <div class="steps-list">
+        <div class="step">
+          <div class="num">1</div>
+          <h3 lang="zh">安装扩展</h3>
+          <h3 lang="en">Install Extension</h3>
+          <p lang="zh">下载 zip，在浏览器开发者模式中加载。</p>
+          <p lang="en">Download zip, load in browser developer mode.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3 lang="zh">打开网页</h3>
+          <h3 lang="en">Open a Page</h3>
+          <p lang="zh">浏览任意文章或博客，点击扩展图标。</p>
+          <p lang="en">Browse any article or blog, click the extension icon.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3 lang="zh">一键总结</h3>
+          <h3 lang="en">Summarize</h3>
+          <p lang="zh">点击"总结当前页面"，AI 自动生成思维导图。</p>
+          <p lang="en">Click "Summarize", AI generates a mind map automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2 lang="zh">开始用思维导图理解网页</h2>
+    <h2 lang="en">Start Understanding Webpages with Mind Maps</h2>
+    <p lang="zh">开源免费，支持 Chrome 和 Edge</p>
+    <p lang="en">Open source & free, works with Chrome and Edge</p>
+    <div class="hero-buttons">
+      <a class="btn btn-primary" href="https://github.com/zhenda-hub/web2mm/releases/latest" target="_blank">
+        <span lang="zh">免费下载</span>
+        <span lang="en">Download Free</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <a href="privacy.html" lang="zh">隐私政策</a>
+      <a href="privacy.html" lang="en">Privacy Policy</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/zhenda-hub/web2mm" target="_blank">GitHub</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank" lang="zh">反馈</a>
+      <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank" lang="en">Feedback</a>
+    </p>
+    <p style="margin-top:8px">&copy; 2025 Web2MM. Apache-2.0 License</p>
+  </footer>
+
+  <script>
+    function toggleLang() {
+      document.body.classList.toggle('en');
+      const btn = document.querySelector('.lang-toggle');
+      btn.textContent = document.body.classList.contains('en') ? '中文' : 'EN';
+    }
+  </script>
+</body>
+</html>

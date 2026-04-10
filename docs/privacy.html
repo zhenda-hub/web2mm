@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隐私政策 - Web2MM</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.8;
+      padding: 0 24px;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 0;
+    }
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    .updated { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+    h2 { font-size: 18px; margin-top: 32px; margin-bottom: 12px; }
+    p { margin-bottom: 12px; font-size: 15px; }
+    ul { margin: 12px 0; padding-left: 24px; }
+    li { margin-bottom: 8px; font-size: 15px; }
+    a { color: #4f46e5; }
+    a:hover { text-decoration: underline; }
+    .back { display: inline-block; margin-bottom: 24px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">&larr; 返回首页</a>
+    <h1>Privacy Policy / 隐私政策</h1>
+    <p class="updated">Last updated / 最后更新：2025-04-11</p>
+
+    <h2>Overview / 概述</h2>
+    <p>Web2MM is an open-source browser extension that summarizes webpage content into interactive mind maps. We are committed to protecting your privacy.</p>
+    <p>Web2MM 是一款开源浏览器扩展，将网页内容总结为交互式思维导图。我们致力于保护您的隐私。</p>
+
+    <h2>Data Collection / 数据收集</h2>
+    <p><strong>We do not collect, store, or transmit any personal data.</strong></p>
+    <p><strong>我们不收集、存储或传输任何个人数据。</strong></p>
+    <ul>
+      <li>No user tracking or analytics / 不追踪用户行为</li>
+      <li>No cookies / 不使用 Cookie</li>
+      <li>No personal information collected / 不收集个人信息</li>
+      <li>No browsing history stored / 不存储浏览历史</li>
+    </ul>
+
+    <h2>Data Storage / 数据存储</h2>
+    <p>All data is stored locally on your device using <code>chrome.storage.local</code>:</p>
+    <p>所有数据通过 <code>chrome.storage.local</code> 存储在您的设备本地：</p>
+    <ul>
+      <li><strong>Settings</strong>: Your API key, platform selection, and model preference / <strong>设置</strong>：您的 API Key、平台选择和模型偏好</li>
+      <li><strong>Cache</strong>: AI response cache (24h TTL) to avoid redundant API calls / <strong>缓存</strong>：AI 响应缓存（24 小时过期），避免重复调用</li>
+    </ul>
+    <p>Neither settings nor cache are transmitted to any third-party servers.</p>
+    <p>设置和缓存均不会传输到任何第三方服务器。</p>
+
+    <h2>Third-Party Services / 第三方服务</h2>
+    <p>Web2MM sends webpage text content to AI providers for summarization. This only happens when you click the "Summarize" button:</p>
+    <p>Web2MM 将网页文本内容发送给 AI 提供商进行总结。此操作仅在您点击"总结"按钮时发生：</p>
+    <ul>
+      <li><strong>SiliconFlow</strong> (<a href="https://siliconflow.cn" target="_blank">siliconflow.cn</a>) / 国内 AI 平台</li>
+      <li><strong>OpenRouter</strong> (<a href="https://openrouter.ai" target="_blank">openrouter.ai</a>) / 海外 AI 平台</li>
+    </ul>
+    <p>Only the extracted text content of the webpage is sent. No other data is transmitted.</p>
+    <p>仅发送提取的网页文本内容，不传输其他任何数据。</p>
+
+    <h2>Open Source / 开源</h2>
+    <p>Web2MM is fully open source. You can review all code at <a href="https://github.com/zhenda-hub/web2mm" target="_blank">github.com/zhenda-hub/web2mm</a>.</p>
+    <p>Web2MM 完全开源，您可以在 <a href="https://github.com/zhenda-hub/web2mm" target="_blank">github.com/zhenda-hub/web2mm</a> 审查所有代码。</p>
+
+    <h2>Contact / 联系方式</h2>
+    <p>If you have questions about this privacy policy, please open an issue on <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank">GitHub Issues</a>.</p>
+    <p>如有隐私政策相关问题，请在 <a href="https://github.com/zhenda-hub/web2mm/issues" target="_blank">GitHub Issues</a> 提交。</p>
+  </div>
+</body>
+</html>
